@@ -56,3 +56,44 @@ actions:
       - echo "Yo"
       - echo "What's up"
 ```
+
+### Functions
+
+```yaml
+name: test-deployment
+
+functions:
+  reuse_me:
+    params:
+      VAL_A
+      VAL_B
+    steps:
+      - echo $VAL_A $VAL_B
+
+actions:
+  step-one:
+    image: node:latest
+    steps:
+      - ::reuse_me(test, value)
+
+  step-two:
+    image: node:latest
+    steps:
+      - ::reuse_me(test, value)
+```
+
+### Imports
+
+```yaml
+name: test-deployment
+
+imports:
+  - ./functions.yml
+
+actions:
+  step-one:
+    image: node:latest
+    steps:
+      - ::reuse_me(test, value)
+```
+
